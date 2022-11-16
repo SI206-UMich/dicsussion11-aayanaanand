@@ -60,7 +60,19 @@ def add_pets_from_json(filename, cur, conn):
     json_data = json.loads(file_data)
 
     # THE REST IS UP TO YOU
-    pass
+    for pet in json_data:
+        name = pet["name"]
+        species = pet["species"]
+        age = pet["age"]
+        cuteness = pet["cuteness"]
+        aggressiveness = pet["aggressiveness"]
+
+        cur.execute('SELECT id FROM Species WHERE title = ' + species)
+        for id in cur:
+            species_id = id
+        
+        cur.execute("INSERT INTO Patients (name, species_id, age, cuteness, aggressiveness) VALUES (?,?,?,?,?)",(name, species_id, age, cuteness, aggressiveness))
+        conn.commit()
 
 
 # TASK 3
@@ -77,7 +89,7 @@ def main():
 
     create_patients_table(cur, conn)
     add_fluffle(cur, conn)
-    #add_pets_from_json('pets.json', cur, conn)
+    add_pets_from_json('/users/harva1/desktop/si 206/dicsussion11-aayanaanand/pets.json', cur, conn)
     #ls = (non_aggressive_pets(10, cur, conn))
     #print(ls)
     
